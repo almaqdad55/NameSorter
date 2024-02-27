@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\nameSorterLibrary\nameSorterLibrary.csproj" />
-    <ProjectReference Include="..\NameSorterTest\NameSorterTest.csproj" />
   </ItemGroup>
   <ItemGroup>
   <None Update="appsettings.json">

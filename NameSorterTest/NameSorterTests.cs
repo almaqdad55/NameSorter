@@ -1,17 +1,22 @@
-﻿using Xunit;
-using Moq;
+﻿using Moq;
 using nameSorterLibrary;
 using nameSorterLibrary.Interfaces;
 using name_sorter;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 public class NameSorterTests
 {
+    private readonly string expectedOutputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "expectedOutput.txt");
+
     [Fact]
     public void FileReader_ShouldReturnListOfNames()
     {
         // Arrange
-        var fileReader = new FileReader();
-        string testFilePath = "test.txt"; // Ensure this file exists with test data
+    
+        ILogger<FileReader> logger = new NullLogger<FileReader>();
+        FileReader fileReader = new(logger);
+        string testFilePath = "test.txt";
 
         // Act
         var result = fileReader.ReadNamesFromFile(testFilePath);
@@ -19,6 +24,8 @@ public class NameSorterTests
         // Assert
         Assert.NotNull(result);
         Assert.NotEmpty(result);
+
+       Console.WriteLine(expectedOutputFilePath);
     }
 
     [Fact]
@@ -37,19 +44,28 @@ public class NameSorterTests
     }
 
     [Fact]
-    public void OutputHandler_ShouldPrintAndSaveNames()
+    public void PrintAndSaveSortedNames_SavesCorrectContent()
     {
         // Arrange
-        var mockOutputHandler = new Mock<IOutputHandler>();
-        var sortedNames = new List<string> { "Alice Johnson", "Jane Doe", "John Smith" };
+        var mockLogger = new Mock<ILogger<OutputHandler>>();
+        var outputHandler = new OutputHandler(mockLogger.Object);
+        var sortedNames = new List<string> { "Jane Doe", "John Doe" };
+        var expectedFilePath = "sorted-names-list.txt";
 
         // Act
-        mockOutputHandler.Object.PrintAndSaveSortedNames(sortedNames);
+        outputHandler.PrintAndSaveSortedNames(sortedNames);
 
         // Assert
-        // Here you would assert that the file was created and contains the expected content
-        // This might involve reading the file and comparing its contents to `sortedNames`
+        var writtenContent = File.ReadAllLines(expectedFilePath);
+        Assert.Equal(sortedNames, writtenContent);
+
+        // Cleanup
+        if (File.Exists(expectedFilePath))
+        {
+            File.Delete(expectedFilePath);
+        }
     }
+
 
     [Fact]
     public void NameSorterApp_ShouldRunSuccessfully()
@@ -64,7 +80,8 @@ public class NameSorterTests
         mockFileReader.Setup(m => m.ReadNamesFromFile(testFilePath)).Returns(names);
         mockNameSorter.Setup(m => m.Sort(It.IsAny<List<string>>())).Returns(names);
 
-        var app = new NameSorterApp(mockFileReader.Object, mockNameSorter.Object, mockOutputHandler.Object);
+        ILogger<NameSorterApp> logger = new NullLogger<NameSorterApp>();
+        var app = new NameSorterApp(mockFileReader.Object, mockNameSorter.Object, mockOutputHandler.Object, logger);
 
         // Act
         app.Run(testFilePath);

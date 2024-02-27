@@ -1,16 +1,30 @@
 ﻿
 using nameSorterLibrary.Interfaces;
-
 namespace nameSorterLibrary;
 
 public class NameSorter : INameSorter
 {
+
     public List<string> Sort(List<string> names)
     {
-        return names
-            .OrderBy(name => name.Split(' ').Last())
-            .ThenBy(name => string.Join(" ", name.Split(' ').TakeWhile(part => part != name.Split(' ').Last())))
+        var sortedNames = names
+            .Select(name =>
+            {
+                var lastName = name.Split(' ').Last();
+                var firstNames = name.Substring(0, name.Length - lastName.Length).Trim();
+                return new
+                {
+                    FullName = name,
+                    LastName = lastName,
+                    FirstNames = firstNames
+                };
+            })
+            .OrderBy(nameInfo => nameInfo.LastName)
+            .ThenBy(nameInfo => nameInfo.FirstNames)
+            .Select(nameInfo => nameInfo.FullName)
             .ToList();
+
+        return sortedNames;
     }
 }
 

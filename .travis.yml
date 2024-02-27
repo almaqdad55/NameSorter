@@ -1,5 +1,4 @@
-﻿
-language: csharp
+﻿language: csharp
 mono: none
 dotnet: 6.0 
 solution: name-sorter.sln	 
@@ -7,4 +6,4 @@ solution: name-sorter.sln
 script:
   - dotnet restore
   - dotnet build
-  - dotnet test NameSorterTest/NameSorterTest.csproj   # Replace with your test project path
+  - dotnet test NameSorterTest/NameSorterTest.csproj

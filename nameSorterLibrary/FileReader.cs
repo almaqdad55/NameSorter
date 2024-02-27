@@ -1,25 +1,36 @@
 ﻿
+using Microsoft.Extensions.Logging;
 using nameSorterLibrary.Interfaces;
+
 
 namespace nameSorterLibrary;
 
 public class FileReader : IFileReader
 {
+
+    private readonly ILogger<FileReader> _log;
+
+    public FileReader(ILogger<FileReader> log)
+    {
+        _log = log;
+    }
+
     public List<string> ReadNamesFromFile(string filePath)
     {
         try
         {
+            _log.LogInformation("Reading {filePath}", filePath);
             return File.ReadAllLines(filePath).ToList();
         }
-        catch (FileNotFoundException)
+        catch (FileNotFoundException ex)
         {
-            Console.WriteLine("File not found: " + filePath);
-            return null;
+            _log.LogError("Erorr File Not Found!!!", ex);
+            throw;
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error occurred while reading the file: " + ex.Message);
-            return null;
+            _log.LogError("An error occurred while reading the file: ", ex.Message);
+            throw;
         }
     }
 }

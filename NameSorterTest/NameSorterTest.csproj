@@ -24,5 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\nameSorterLibrary\nameSorterLibrary.csproj" />
+    <ProjectReference Include="..\name-sorter\name-sorter.csproj" />
   </ItemGroup>
 </Project>
