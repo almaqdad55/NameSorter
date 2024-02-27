@@ -1,13 +1,9 @@
-﻿
-using Microsoft.Extensions.Logging;
-using nameSorterLibrary.Interfaces;
-
-
-namespace nameSorterLibrary;
+﻿using Microsoft.Extensions.Logging;
+using Utilities.Interfaces;
+namespace Utilities;
 
 public class FileReader : IFileReader
 {
-
     private readonly ILogger<FileReader> _log;
 
     public FileReader(ILogger<FileReader> log)
@@ -15,6 +11,7 @@ public class FileReader : IFileReader
         _log = log;
     }
 
+    // Read names from a file specified by the filePath
     public List<string> ReadNamesFromFile(string filePath)
     {
         try

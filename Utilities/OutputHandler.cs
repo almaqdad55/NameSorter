@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using nameSorterLibrary.Interfaces;
+using Utilities.Interfaces;
 
-namespace nameSorterLibrary;
+namespace Utilities;
 
 public class OutputHandler : IOutputHandler
 {
@@ -12,6 +12,7 @@ public class OutputHandler : IOutputHandler
         _log = log;
     }
 
+    // Print and save sorted names
     public void PrintAndSaveSortedNames(List<string> sortedNames)
     {
         foreach (var name in sortedNames)

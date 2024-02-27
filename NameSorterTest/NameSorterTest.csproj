@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nameSorterLibrary\nameSorterLibrary.csproj" />
     <ProjectReference Include="..\name-sorter\name-sorter.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 </Project>

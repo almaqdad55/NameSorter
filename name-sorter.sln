@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1706.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "name-sorter", "name-sorter\name-sorter.csproj", "{C355662A-3991-4381-96DE-8013D23ABE80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nameSorterLibrary", "nameSorterLibrary\nameSorterLibrary.csproj", "{CCF8C6F0-5553-4D9F-8F28-A391BC8CFADB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{CCF8C6F0-5553-4D9F-8F28-A391BC8CFADB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NameSorterTest", "NameSorterTest\NameSorterTest.csproj", "{49471D2C-EE76-46EA-8FE4-871821EDFC1E}"
 EndProject
@@ -38,5 +38,13 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBC11F3F-5F2E-4C89-8AE0-3AE984F6CBC3}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.scope = text/x-csharp
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using nameSorterLibrary;
-using nameSorterLibrary.Interfaces;
-
+using Utilities.Interfaces;
 namespace name_sorter;
 
 public class NameSorterApp
@@ -20,8 +18,11 @@ public class NameSorterApp
 
     }
 
+    // The entry point for executing the name sorting logic
     public void Run(string filePath)
     {
+
+        // Read names from a file specified by the filePath
         List<string> names = _fileReader.ReadNamesFromFile(filePath);
 
         if (names == null)
@@ -30,11 +31,10 @@ public class NameSorterApp
             return;
         }
 
+        // Sort names based lastName -> Firstname
         List<string> sortedNames = _nameSorter.Sort(names);
+
+        // Print and save sorted names
         _outputHandler.PrintAndSaveSortedNames(sortedNames);
-
-
-        _log.LogInformation("Names sorted successfully!");
-
     }
 }

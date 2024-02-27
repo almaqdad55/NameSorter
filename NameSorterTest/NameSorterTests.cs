@@ -1,6 +1,6 @@
 ﻿using Moq;
-using nameSorterLibrary;
-using nameSorterLibrary.Interfaces;
+using Utilities;
+using Utilities.Interfaces;
 using name_sorter;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -13,9 +13,8 @@ public class NameSorterTests
     public void FileReader_ShouldReturnListOfNames()
     {
         // Arrange
-    
-        ILogger<FileReader> logger = new NullLogger<FileReader>();
-        FileReader fileReader = new(logger);
+        var mockLogger = new Mock<ILogger<FileReader>>();
+        var fileReader = new FileReader(mockLogger.Object);
         string testFilePath = "test.txt";
 
         // Act
@@ -33,13 +32,13 @@ public class NameSorterTests
     {
         // Arrange
         var nameSorter = new NameSorter();
-        var names = new List<string> { "Jane Doe", "John Smith", "Alice Johnson" };
+        var names = new List<string> { "Beau Tristan Bentley", "Marin Alvarez", "Adonis Julius Archer" };
 
         // Act
         var result = nameSorter.Sort(names);
 
         // Assert
-        var expected = new List<string> { "Jane Doe", "Alice Johnson", "John Smith" };
+        var expected = new List<string> { "Marin Alvarez", "Adonis Julius Archer", "Beau Tristan Bentley" };
         Assert.Equal(expected, result);
     }
 
@@ -80,8 +79,8 @@ public class NameSorterTests
         mockFileReader.Setup(m => m.ReadNamesFromFile(testFilePath)).Returns(names);
         mockNameSorter.Setup(m => m.Sort(It.IsAny<List<string>>())).Returns(names);
 
-        ILogger<NameSorterApp> logger = new NullLogger<NameSorterApp>();
-        var app = new NameSorterApp(mockFileReader.Object, mockNameSorter.Object, mockOutputHandler.Object, logger);
+        var mockLogger = new Mock<ILogger<NameSorterApp>>();
+        var app = new NameSorterApp(mockFileReader.Object, mockNameSorter.Object, mockOutputHandler.Object, mockLogger.Object);
 
         // Act
         app.Run(testFilePath);
