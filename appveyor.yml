@@ -1,0 +1,10 @@
+﻿image: Visual Studio 2019
+environment:
+  dotnet_csproj: <./>  # Specify the path to your .csproj file
+
+build_script:
+  - dotnet restore
+  - dotnet build
+
+test_script:
+  - dotnet test
